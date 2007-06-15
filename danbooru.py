@@ -79,7 +79,7 @@ class ServerIdError(KeyError):
 class Robot(dict):
     #~ api_url = 'http://danbooru.donmai.us/api/'
     api_url = 'http://miezaru.donmai.us/api/'
-    posts_path = 'find_posts?tags=%(tags)s%(last_id)s%(rating)s&limit=\
+    posts_path = 'find_posts?tags=%(tags)s%(rating)s&limit=\
 %(limit)d&offset=%(offset)d'
     last_id = '+after_id:%d'
     rating_path = '+rating:%s'
@@ -507,26 +507,26 @@ in the local database',
         metavar='NUM', default=1000, type='int')
     parser.add_option('-o', '--offset', dest='offset', help=help['offset'], \
         metavar='NUM', default=0, type='int')
-    parser.add_option('-s', '--server', dest='server', help=help['server'], \
-        metavar='NUM', default=None, type='int')
+    #~ parser.add_option('-s', '--server', dest='server', help=help['server'], \
+        #~ metavar='NUM', default=None, type='int')
     parser.add_option('-r', '--rating', dest='rating', help=help['rating'], \
         metavar='NAME', default=None, type='string')
     parser.add_option('-f', '--folder', dest='folder', help=help['folder'], \
         metavar='PATH', default=None)
-    parser.add_option('-i', '--no-last-id', dest='refresh', \
-        help=help['refresh'], action='store_true', default=False)
+    #~ parser.add_option('-i', '--no-last-id', dest='refresh', \
+        #~ help=help['refresh'], action='store_true', default=False)
     parser.add_option('-n', '--no-db', dest='nodb', help=help['nodb'], \
         action='store_true', default=False)
     parser.add_option('-c', '--catalogue', dest='catalogue', \
         help=help['catalogue'], metavar='PATH', default=None)
     parser.add_option('-x', '--fix', dest='fixnames', help=help['fixnames'], \
         metavar='PATH', default=None)
-    parser.add_option('-u', '--update', dest='update', help=help['update'], \
-        action='store_true', default=False)
-    parser.add_option('-L', '--list', dest='list', help=help['list'], \
-        action='store_true', default=False)
-    parser.add_option('-d', '--default', dest='set_default', \
-        help=help['set_default'], metavar='ID', default=None, type='int')
+    #~ parser.add_option('-u', '--update', dest='update', help=help['update'], \
+        #~ action='store_true', default=False)
+    #~ parser.add_option('-L', '--list', dest='list', help=help['list'], \
+        #~ action='store_true', default=False)
+    #~ parser.add_option('-d', '--default', dest='set_default', \
+        #~ help=help['set_default'], metavar='ID', default=None, type='int')
     parser.add_option('-e', '--simulate', dest='simulate', \
         help=help['simulate'], action='store_true', default=False)
     options, args = parser.parse_args()
@@ -537,15 +537,15 @@ def main():
     '''Decide what to do based on the options returned by optparse'''
     options, args, parser = parse_options()
     robot = Robot(args, options.limit, options.offset, rating=options.rating,
-        refresh=options.refresh, nodb=options.nodb, simulate=options.simulate)
+        refresh=False, nodb=options.nodb, simulate=options.simulate)
     if options.rating:
         values = ('safe', 'explicit', 'questionable')
         if options.rating not in values:
             parser.error('only %r are valid ratings' % (values,))
         else:
             robot.rating = options.rating
-    if options.refresh:
-        print 'Using No Last ID mode...'
+    #~ if options.refresh:
+        #~ print 'Using No Last ID mode...'
     if options.folder:
         robot.folder = options.folder
     if options.catalogue:
@@ -554,24 +554,24 @@ def main():
     if options.fixnames:
         for name in robot.expand_paths(options.fixnames):
             robot.fix_filenames(name)
-    if options.update:
-        robot.update_servers()
+    #~ if options.update:
+        #~ robot.update_servers()
     #~ if options.set_default:
         #~ server_id = options.set_default
         #~ robot.use_server(server_id)
         #~ robot.save_settings(default=server_id)
         #~ print 'Default server set to %d (%s)' % \
             #~ (server_id, robot.servers[server_id]['host'])
-    if 'default' not in robot.settings:
-        server_id = robot.servers.keys()[0]
-        robot.use_server(server_id)
-        robot.save_settings(default=server_id)
-    if options.list:
-        robot.list_servers()
-    elif options.server:
-        robot.use_server(options.server)
-    else:
-        robot.use_server(robot.settings['default'])
+    #~ if 'default' not in robot.settings:
+        #~ server_id = robot.servers.keys()[0]
+        #~ robot.use_server(server_id)
+        #~ robot.save_settings(default=server_id)
+    #~ if options.list:
+        #~ robot.list_servers()
+    #~ elif options.server:
+        #~ robot.use_server(options.server)
+    #~ else:
+    #~ robot.use_server(robot.settings['default'])
     #~ if robot.tags:
         #~ if 'server' not in dir(robot):
             #~ robot.use_server(robot.settings['default'])
