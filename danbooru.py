@@ -167,7 +167,6 @@ class Robot(dict):
 
     def get_post(self, id, post):
         '''Download an individual post'''
-        print post
         file_url = post['file_url']
         filename = file_url[file_url.rfind('/')+1:]
         # Figure out the local name (id is padded with zeroes)
