@@ -415,7 +415,7 @@ WHERE md5 IN ("%s");'''
     def update_db(self, data):
         '''Write data to the transaction (has to be committed to the db explicitly)'''
         for key, value in data.iteritems():
-            value['author'] = value['author'].encode('utf-8')
+            #~ value['author'] = value['author'].encode('utf-8')
             values = (key, value.pop('md5'), value.pop('tags'), pickle.dumps(value))
             try:
                 self.cur.execute(self.update_db_command % values)
