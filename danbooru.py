@@ -68,7 +68,7 @@ cases = lambda count, singular, plural: singular if count == 1 else plural
 # Identify as danbooru.py/0.x (change this if you want to go ninja)
 class Opener(urllib.FancyURLopener):
     #~ version = 'danbooru.py/%s' % (__version__,)
-    version = 'w3m/0.8'
+    version = 'telnet 80'
 urllib._urlopener = Opener()
 
 
@@ -78,8 +78,8 @@ class ServerIdError(KeyError):
 
 class Robot(dict):
     #~ api_url = 'http://danbooru.donmai.us/api/'
-    api_url = 'http://miezaru.donmai.us/api/'
-    posts_path = 'find_posts?tags=%(tags)s%(rating)s&limit=\
+    api_url = 'http://miezaru.donmai.us/'
+    posts_path = 'post/index.xml?tags=%(tags)s%(rating)s&limit=\
 %(limit)d&offset=%(offset)d'
     last_id = '+after_id:%d'
     rating_path = '+rating:%s'
@@ -166,7 +166,9 @@ class Robot(dict):
 
     def get_post(self, id, post):
         '''Download an individual post'''
-        filename = post['file_name']
+        print post
+        file_url = post['file_url']
+        filename = file_url[file_url.rfind('/')+1:]
         # Figure out the local name (id is padded with zeroes)
         localname = os.path.join(self.folder, '%07d_%s' % (id, filename))
         if os.path.exists(localname):
