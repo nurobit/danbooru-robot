@@ -29,6 +29,7 @@ usage examples
 
 version history
 ===============
+ * 0.3: 12.09.2007
  * 0.2: 09.01.2007
  * 0.1: 01.01.2007
 
@@ -58,7 +59,7 @@ else:
     from time import time as xtime, sleep
 
 # A tender age
-__version__ = '0.2'
+__version__ = '0.3'
 __build__ = '%build%'
 
 case = lambda count, word: word if count == 1 else word + 's'
